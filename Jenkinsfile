@@ -5,19 +5,39 @@ pipeline {
     stages {
 
         stage('Setup') {
-            sh "echo 'Setup Stage'"
+            
+            steps {
+                sh "echo 'Setup Stage'"
+            }
+
         }
         stage('Test') {
-            sh "echo 'Test Stage'"
+
+            steps {
+                sh "echo 'Test Stage'"
+            }
+
         }
         stage('Build') {
-            sh "echo 'Build Stage'"
+
+            steps {
+                sh "echo 'Build Stage'"
+            }
+
         }
         stage('Deploy') {
-            sh "echo 'Deploy Stage'"
+
+            steps {
+                sh "echo 'Deploy Stage'"
+            }
+
         }
         stage('Verify') {
-            sh "echo 'Verify Stage'"
+
+            steps {
+                sh "echo 'Verify Stage'"
+            }
+
         }
 
     }
