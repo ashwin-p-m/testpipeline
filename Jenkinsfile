@@ -1,7 +1,7 @@
 pipeline {
 
     agent none
-    parameters {}
+    // parameters {}
     stages {
 
         stage('Setup') {
