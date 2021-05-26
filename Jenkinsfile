@@ -9,7 +9,11 @@ pipeline {
         stage('Setup') {
             
             steps {
-                sh "echo 'Setup Stage'"
+
+                echo "Setup Started..."
+                sh "chmod +x ./pipeline-scripts/*"
+                ehco "Setup Finished..."
+
             }
 
         }
@@ -18,7 +22,6 @@ pipeline {
             steps {
 
                 echo "Client Application Test Started..."
-                sh "chmod +x ./pipeline-scripts/client_test.sh"
                 sh "./pipeline-scripts/client_test.sh"
                 echo "Client Application Test Finished..."
 
@@ -28,7 +31,11 @@ pipeline {
         stage('Server Application Test') {
             
             steps {
-                sh "echo 'Server Application Test Stage'"
+                
+                echo "Server Application Test Started..."
+                ssh "./pipeline-scripts/server_test.sh"
+                echo "Server Application Test Finished..."
+
             }
 
         }
