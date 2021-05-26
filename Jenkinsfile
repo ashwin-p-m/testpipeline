@@ -18,6 +18,7 @@ pipeline {
             steps {
 
                 echo "Client Application Test Started..."
+                sh "chmod +x ./pipeline-scripts/client_test.sh"
                 sh "./pipeline-scripts/client_test.sh"
                 echo "Client Application Test Finished..."
 
