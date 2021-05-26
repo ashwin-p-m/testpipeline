@@ -28,7 +28,7 @@ pipeline {
         stage('Server Application Test') {
             
             steps {
-                sh "echo 'Server Application Test Stage"
+                sh "echo 'Server Application Test Stage'"
             }
 
         }
