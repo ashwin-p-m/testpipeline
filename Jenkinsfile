@@ -22,7 +22,9 @@ pipeline {
             steps {
 
                 echo "Client Application Test Started..."
-                sh "./pipeline-scripts/client_test.sh"
+                withNPM() {
+                    sh "./pipeline-scripts/client_test.sh"
+                }
                 echo "Client Application Test Finished..."
 
             }
@@ -33,7 +35,9 @@ pipeline {
             steps {
                 
                 echo "Server Application Test Started..."
-                sh "./pipeline-scripts/server_test.sh"
+                withMaven() {
+                    sh "./pipeline-scripts/server_test.sh"
+                }
                 echo "Server Application Test Finished..."
 
             }
