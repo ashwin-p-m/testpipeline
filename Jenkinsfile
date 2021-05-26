@@ -33,7 +33,7 @@ pipeline {
             steps {
                 
                 echo "Server Application Test Started..."
-                ssh "./pipeline-scripts/server_test.sh"
+                sh "./pipeline-scripts/server_test.sh"
                 echo "Server Application Test Finished..."
 
             }
