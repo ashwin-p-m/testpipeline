@@ -12,7 +12,7 @@ pipeline {
 
                 echo "Setup Started..."
                 sh "chmod +x ./pipeline-scripts/*"
-                ehco "Setup Finished..."
+                echo "Setup Finished..."
 
             }
 
