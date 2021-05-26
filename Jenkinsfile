@@ -18,27 +18,34 @@ pipeline {
             }
 
         }
-        stage('Build') {
+        stage('Docker Build') {
 
             steps {
-                sh "echo 'Build Stage'"
+                sh "echo 'Docker Build Stage'"
             }
 
         }
-        stage('Deploy') {
+        stage('Docker Push') {
 
             steps {
-                sh "echo 'Deploy Stage'"
+                sh "echo 'Docker Push Stage'"
             }
 
         }
-        stage('Verify') {
+        // stage('Deploy') {
 
-            steps {
-                sh "echo 'Verify Stage'"
-            }
+        //     steps {
+        //         sh "echo 'Deploy Stage'"
+        //     }
 
-        }
+        // }
+        // stage('Verify') {
+
+        //     steps {
+        //         sh "echo 'Verify Stage'"
+        //     }
+
+        // }
 
     }
 
