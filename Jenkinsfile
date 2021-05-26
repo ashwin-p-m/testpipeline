@@ -13,16 +13,25 @@ pipeline {
             }
 
         }
-        stage('Test') {
+        stage('Client Application Test') {
 
             steps {
 
-                sh "echo 'Test Stage Started...'"
-                sh "cd client/sample-app"
-                sh "npm install"
-                sh "ls"
-                sh "cd ../.."
+                sh """
+                echo 'Test Stage Started...'
+                cd client/sample-app
+                npm install
+                ls
+                cd ../..
+                """
 
+            }
+
+        }
+        stage('Server Application Test') {
+            
+            steps {
+                sh "echo 'Server Application Test Stage"
             }
 
         }
