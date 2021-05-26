@@ -3,8 +3,8 @@
 cd client/sample-app
 npm install --silent
 ls
-CI=true
+export CI=true
 npm test
-CI=""
+export CI=""
 ls
 cd ../..
