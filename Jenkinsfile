@@ -17,13 +17,9 @@ pipeline {
 
             steps {
 
-                sh """
-                echo 'Test Stage Started...'
-                cd client/sample-app
-                npm install
-                ls
-                cd ../..
-                """
+                echo "Client Application Test Started..."
+                sh "./pipeline-scripts/client_test.sh"
+                echo "Client Application Test Finished..."
 
             }
 
