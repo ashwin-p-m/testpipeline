@@ -1,3 +1,5 @@
+#!/usr/bin/env groovy
+
 pipeline {
 
     agent any
@@ -14,7 +16,13 @@ pipeline {
         stage('Test') {
 
             steps {
-                sh "echo 'Test Stage'"
+
+                sh "echo 'Test Stage Started...'"
+                sh "cd client/sample-app"
+                sh "npm install"
+                sh "ls"
+                sh "cd ../.."
+
             }
 
         }

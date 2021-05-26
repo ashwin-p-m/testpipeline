@@ -1,0 +1,16 @@
+version: "3.9"
+services:
+    testclient:
+        image: ashwinprakash99/testclientimage
+        container_name: testclientcontainer
+        environment:
+        -   SERVER_DOMAIN=testserver
+        ports: [ "80:80" ]
+        networks: [ client_server ]
+        depends_on: [ testserver ]
+    testserver:
+        image: ashwinprakash99/testserverimage
+        container_name: testservercontainer
+        networks: [ client_server ]
+networks:
+    client_server: {}
