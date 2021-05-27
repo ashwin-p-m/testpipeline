@@ -128,7 +128,7 @@ pipeline {
         stage('TestTestTest') {
                 when {
                 anyOf {
-                    branch(pattern: "$BRANCH_PATTERN", comparator: "$REGEXP")
+                    branch pattern: BRANCH_PATTERN, comparator: REGEXP
                 }
             }
             steps {
