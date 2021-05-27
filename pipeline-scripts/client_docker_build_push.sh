@@ -1,7 +1,9 @@
 #!/bin/sh
 
 cd client
-docker image build . --tag "$DOCKER_ACCOUNT_NAME/$CLIENT_IMAGE:$CLIENT_TAG"
-docker image push "$DOCKER_ACCOUNT_NAME/$CLIENT_IMAGE:$CLIENT_TAG"
-docker image rm "$DOCKER_ACCOUNT_NAME/$CLIENT_IMAGE:$CLIENT_TAG"
+echo -n $ARTIFACTORY_CRED_PSW | docker login --username $ARTIFACTORY_CRED_USR --password-stdin $DOCKER_BASE
+docker image build . --tag "$DOCKER_BASE/$DOCKER_ACCOUNT_NAME/$CLIENT_IMAGE:$CLIENT_TAG"
+docker image push "$DOCKER_BASE/$DOCKER_ACCOUNT_NAME/$CLIENT_IMAGE:$CLIENT_TAG"
+docker image rm "$DOCKER_BASE/$DOCKER_ACCOUNT_NAME/$CLIENT_IMAGE:$CLIENT_TAG"
+docker logout
 cd ..
