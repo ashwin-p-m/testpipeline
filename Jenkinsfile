@@ -16,7 +16,7 @@ pipeline {
 
                     env.DOCKER_BASE = "docker.io"
                     env.ARTIFACTORY_CRED_ID = "docker-credentials"
-                    env.BRANCH_PATTERN = "main|develop|test-dev|^TS-.*|PR-\\d+"
+                    env.BRANCH_PATTERN = "main|develop|^TS-.*|PR-\\d+"
                     env.REGEXP = "REGEXP"
 
                 }
@@ -58,6 +58,22 @@ pipeline {
                 sh "./pipeline-scripts/server_test.sh"
                 echo "Server Application Test Finished..."
 
+            }
+
+        }
+        stage('Docker Client Application Build') {
+
+            when {
+
+                anyOf {
+                    branch pattern: BRANCH_PATTERN, comparator: REGEXP
+                }
+
+            }
+            steps {
+                echo "Docker Client Application Build Started..."
+
+                echo "Docker Client Application Build Finished..."
             }
 
         }
