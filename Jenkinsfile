@@ -10,17 +10,17 @@ pipeline {
             
             steps {
 
-                echo "Setup Started..."
-                sh "chmod +x ./pipeline-scripts/*"
                 script {
 
+                    echo "Setup Started..."
+                    sh "chmod +x ./pipeline-scripts/*"
                     env.DOCKER_BASE = "docker.io"
-                    env.ARTIFACTORY_CRED_ID = "docker-credentials"
+                    env.ARTIFACTORY_CRED_ID = "docker-registry-credentials"
                     env.BRANCH_PATTERN = "main|develop|test-dev|^TS-.*|PR-\\d+"
                     env.REGEXP = "REGEXP"
+                    echo "Setup Finished..."
 
                 }
-                echo "Setup Finished..."
 
             }
 
@@ -36,9 +36,13 @@ pipeline {
             }
             steps {
 
-                echo "Client Application Test Started..."
-                sh "./pipeline-scripts/client_test.sh"
-                echo "Client Application Test Finished..."
+                script {
+
+                    echo "Client Application Test Started..."
+                    sh "./pipeline-scripts/client_test.sh"
+                    echo "Client Application Test Finished..."
+                
+                }
 
             }
 
@@ -54,14 +58,18 @@ pipeline {
             }
             steps {
                 
-                echo "Server Application Test Started..."
-                sh "./pipeline-scripts/server_test.sh"
-                echo "Server Application Test Finished..."
+                script {
+
+                    echo "Server Application Test Started..."
+                    sh "./pipeline-scripts/server_test.sh"
+                    echo "Server Application Test Finished..."
+
+                }
 
             }
 
         }
-        stage('Docker Client Application Build') {
+        stage('Docker Client Application Build And Push') {
 
             when {
 
@@ -71,9 +79,13 @@ pipeline {
 
             }
             steps {
-                echo "Docker Client Application Build Started..."
 
-                echo "Docker Client Application Build Finished..."
+                script {
+
+                    echo "Docker Client Application Build And Push Started..."
+                    echo "Docker Client Application Build Finished..."
+
+                }
             }
 
         }
