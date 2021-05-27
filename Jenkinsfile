@@ -43,6 +43,9 @@ pipeline {
 
                 script {
 
+                    env.CLIENT_VERSION = sh returnStdout: true, script: 'cd client/sample-app && node --print --eval "require(\'./package.json\').version"'
+                    env.CLIENT_VERSION = sh returnStdout: true, script: 'echo -n $CLIENT_VERSION'
+                    env.CLIENT_TAG = "$CLIENT_VERSION-" + currentBuild.number
                     echo "Client Application Test Started..."
                     sh "./pipeline-scripts/client_test.sh"
                     echo "Client Application Test Finished..."
