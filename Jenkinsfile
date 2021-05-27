@@ -19,7 +19,6 @@ pipeline {
                     env.CLIENT_IMAGE = "testclient"
                     env.CLIENT_TAG = "0.0.1-" + currentBuild.number
                     env.SERVER_IMAGE = "testserver"
-                    env.SERVER_TAG = "0.0.1-" + currentBuild.number
                     env.ARTIFACTORY_CRED_ID = "docker-registry-credentials"
                     env.BRANCH_PATTERN = "main|develop|test-dev|^TS-.*|PR-\\d+"
                     env.REGEXP = "REGEXP"
@@ -31,99 +30,101 @@ pipeline {
             }
 
         }
-        // stage('Client Application Test') {
+        stage('Client Application Test') {
 
-        //     when {
+            when {
 
-        //         anyOf {
-        //             branch pattern: BRANCH_PATTERN, comparator: REGEXP
-        //         }
+                anyOf {
+                    branch pattern: BRANCH_PATTERN, comparator: REGEXP
+                }
 
-        //     }
-        //     steps {
+            }
+            steps {
 
-        //         script {
+                script {
 
-        //             echo "Client Application Test Started..."
-        //             sh "./pipeline-scripts/client_test.sh"
-        //             echo "Client Application Test Finished..."
+                    echo "Client Application Test Started..."
+                    sh "./pipeline-scripts/client_test.sh"
+                    echo "Client Application Test Finished..."
                 
-        //         }
+                }
 
-        //     }
+            }
 
-        // }
-        // stage('Server Application Test') {
+        }
+        stage('Server Application Test') {
             
-        //     when {
+            when {
 
-        //         anyOf {
-        //             branch pattern: BRANCH_PATTERN, comparator: REGEXP
-        //         }
+                anyOf {
+                    branch pattern: BRANCH_PATTERN, comparator: REGEXP
+                }
 
-        //     }
-        //     steps {
+            }
+            steps {
                 
-        //         script {
+                script {
 
-        //             echo "Server Application Test Started..."
-        //             sh "./pipeline-scripts/server_test.sh"
-        //             echo "Server Application Test Finished..."
+                    env.TEST = sh returnStdout: true, script: 'cd server/demo && mvn help:evaluate -Dexpression="project.version" | grep -Ev "(^\\[.*|Down.*)"'
+                    env.SERVER_TAG = "$TEST-" + currentBuild.number
+                    echo "Server Application Test Started..."
+                    sh "./pipeline-scripts/server_test.sh"
+                    echo "Server Application Test Finished..."
 
-        //         }
+                }
 
-        //     }
+            }
 
-        // }
-        // stage('Docker Client Application Build And Push') {
+        }
+        stage('Docker Client Application Build And Push') {
 
-        //     when {
+            when {
 
-        //         anyOf {
-        //             branch pattern: BRANCH_PATTERN, comparator: REGEXP
-        //         }
+                anyOf {
+                    branch pattern: BRANCH_PATTERN, comparator: REGEXP
+                }
 
-        //     }
-        //     environment {
-        //         ARTIFACTORY_CRED = credentials("$ARTIFACTORY_CRED_ID")
-        //     }
-        //     steps {
+            }
+            environment {
+                ARTIFACTORY_CRED = credentials("$ARTIFACTORY_CRED_ID")
+            }
+            steps {
 
-        //         script {
+                script {
 
-        //             echo "Docker Client Application Build And Push Started..."
-        //             sh "./pipeline-scripts/client_docker_build_push.sh"
-        //             echo "Docker Client Application Build Finished..."
+                    echo "Docker Client Application Build And Push Started..."
+                    sh "./pipeline-scripts/client_docker_build_push.sh"
+                    echo "Docker Client Application Build Finished..."
 
-        //         }
-        //     }
+                }
+            }
 
-        // }
-        // stage('Docker Server Application Build And Push') {
+        }
+        stage('Docker Server Application Build And Push') {
 
-        //     when {
+            when {
 
-        //         anyOf {
-        //             branch pattern: BRANCH_PATTERN, comparator: REGEXP
-        //         }
+                anyOf {
+                    branch pattern: BRANCH_PATTERN, comparator: REGEXP
+                }
 
-        //     }
-        //     environment {
-        //         ARTIFACTORY_CRED = credentials("$ARTIFACTORY_CRED_ID")
-        //     }
-        //     steps {
+            }
+            environment {
+                ARTIFACTORY_CRED = credentials("$ARTIFACTORY_CRED_ID")
+            }
+            steps {
                 
-        //         script {
+                script {
 
-        //             echo "Docker Server Application Build And Push Started..."
-        //             sh "./pipeline-scripts/server_docker_build_push.sh"
-        //             echo "Docker Server Application Build Finished..."
+                    echo "Docker Server Application Build And Push Started..."
+                    sh "./pipeline-scripts/server_docker_build_push.sh"
+                    echo "Docker Server Application Build Finished..."
 
-        //         }
+                }
 
-        //     }
+            }
 
-        // }
+        }
 
         stage('TestTestTest') {
             when {
