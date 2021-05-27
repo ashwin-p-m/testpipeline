@@ -17,9 +17,9 @@ pipeline {
                     env.DOCKER_BASE = "docker.io"
                     env.DOCKER_ACCOUNT_NAME = "ashwinprakash99"
                     env.CLIENT_IMAGE = "testclient"
-                    env.CLIENT_TAG = "0.0.1-" + $BUID_ID
+                    env.CLIENT_TAG = "0.0.1-" + ${currentBuild.number}
                     env.SERVER_IMAGE = "testserver"
-                    env.SERVER_TAG = "0.0.1-" + $BUID_ID
+                    env.SERVER_TAG = "0.0.1-" + ${currentBuild.number}
                     env.ARTIFACTORY_CRED_ID = "docker-registry-credentials"
                     env.BRANCH_PATTERN = "main|develop|test-dev|^TS-.*|PR-\\d+"
                     env.REGEXP = "REGEXP"
