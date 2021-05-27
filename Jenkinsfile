@@ -16,7 +16,7 @@ pipeline {
 
                     env.DOCKER_BASE = "docker.io"
                     env.ARTIFACTORY_CRED_ID = "docker-credentials"
-                    env.BRANCH_PATTERN = "main|develop|^TS-.*|PR-\\d+"
+                    env.BRANCH_PATTERN = "main|develop|test-dev|^TS-.*|PR-\\d+"
                     env.REGEXP = "REGEXP"
 
                 }
