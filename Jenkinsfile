@@ -133,7 +133,7 @@ pipeline {
             }
             steps {
                 script {
-                    env.TEST = sh(returnStdout: true, script: 'mvn help:evaluate -Dexpression="project.version" | grep -Ev "(^\[.*|Down.*)"')
+                    env.TEST = sh(returnStdout: true, script: 'mvn help:evaluate -Dexpression="project.version" | grep -Ev "(^\\[.*|Down.*)"')
                 }
             }
         }
