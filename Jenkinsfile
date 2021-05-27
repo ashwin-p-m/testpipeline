@@ -65,7 +65,8 @@ pipeline {
                 
                 script {
 
-                    env.SERVER_VERSION = sh returnStdout: true, script: 'cd server/demo && mvn help:evaluate -Dexpression="project.version" | grep -Ev "(^\\[.*|Down.*)" | echo -n'
+                    env.SERVER_VERSION = sh returnStdout: true, script: 'cd server/demo && mvn help:evaluate -Dexpression="project.version" | grep -Ev "(^\\[.*|Down.*)"'
+                    env.SERVER_VERSION = sh returnStdout: true, script: 'echo -n $SERVER_VERSION'
                     env.SERVER_TAG = "$SERVER_VERSION-" + currentBuild.number
                     echo "Server Application Test Started..."
                     sh "./pipeline-scripts/server_test.sh"
