@@ -129,21 +129,6 @@ pipeline {
             }
 
         }
-
-        stage('TestTestTest') {
-            when {
-                anyOf {
-                    branch pattern: BRANCH_PATTERN, comparator: REGEXP
-                }
-            }
-            steps {
-                script {
-                    env.TEST = sh returnStdout: true, script: 'cd server/demo && mvn help:evaluate -Dexpression="project.version" | grep -Ev "(^\\[.*|Down.*)"'
-                    echo "$TEST"
-                }
-            }
-        }
-
         // stage('Deploy') {
 
         //     steps {
