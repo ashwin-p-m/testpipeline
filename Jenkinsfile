@@ -108,17 +108,16 @@ pipeline {
                 }
 
             }
+            environment {
+                ARTIFACTORY_CRED = credentials("$ARTIFACTORY_CRED_ID")
+            }
             steps {
                 
                 script {
 
-                    withDockerRegistry([url: "https://$DOCKER_BASE", credentialsId: "$ARTIFACTORY_CRED_ID"]) {
-
-                        echo "Docker Server Application Build And Push Started..."
-                        sh "./pipeline-scripts/server_docker_build_push.sh"
-                        echo "Docker Server Application Build Finished..."
-
-                    }
+                    echo "Docker Server Application Build And Push Started..."
+                    sh "./pipeline-scripts/server_docker_build_push.sh"
+                    echo "Docker Server Application Build Finished..."
 
                 }
 
