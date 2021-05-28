@@ -23,6 +23,7 @@ pipeline {
                     env.BRANCH_PATTERN = "main|develop|test-dev|^TS-.*|PR-\\d+"
                     env.REGEXP = "REGEXP"
                     env.DOCKER_ACCOUNT_NAME = "ashwinprakash99"
+                    env.GIT_HASH = sh(returnStdout: true, script: "git rev-parse --short HEAD")
                     echo "Setup Finished..."
 
                 }
@@ -48,7 +49,7 @@ pipeline {
 
                     env.CLIENT_VERSION = sh returnStdout: true, script: 'cd client/sample-app && npm run env | grep npm_package_version | cut --delimiter "=" --fields 2'
                     env.CLIENT_VERSION = sh returnStdout: true, script: 'echo -n $CLIENT_VERSION'
-                    env.CLIENT_TAG = "$CLIENT_VERSION-" + currentBuild.number
+                    env.CLIENT_TAG = "$CLIENT_VERSION-$GIT_HASH"
                     echo "Client Application Test Started..."
                     sh "chmod +x ./pipeline-scripts/client_test.sh"
                     sh "./pipeline-scripts/client_test.sh"
