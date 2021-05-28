@@ -52,7 +52,7 @@ pipeline {
 
                     env.CLIENT_VERSION = sh returnStdout: true, script: 'cd client/sample-app && npm run env | grep npm_package_version | cut -d "=" -f 2'
                     env.CLIENT_VERSION = sh returnStdout: true, script: "echo -n $CLIENT_VERSION"
-                    env.CLIENT_TAG = sh returnStdout: true, script: "echo -n $CLIENT_VERSION-$GIT_HASH"
+                    env.CLIENT_TAG = "$CLIENT_VERSION-$GIT_HASH"
                     echo 'Client Application Test Started...'
                     sh 'chmod +x ./pipeline-scripts/client_test.sh'
                     sh './pipeline-scripts/client_test.sh'
@@ -81,7 +81,7 @@ pipeline {
 
                     env.SERVER_VERSION = sh returnStdout: true, script: 'cd server/demo && mvn help:evaluate -Dexpression="project.version" | grep -Ev "(^\\[.*|Down.*)"'
                     env.SERVER_VERSION = sh returnStdout: true, script: "echo -n $SERVER_VERSION"
-                    env.SERVER_TAG = sh returnStdout: true, script: "echo -n $SERVER_VERSION-$GIT_HASH"
+                    env.SERVER_TAG = "$SERVER_VERSION-$GIT_HASH"
                     echo 'Server Application Test Started...'
                     sh 'chmod +x ./pipeline-scripts/server_test.sh'
                     sh './pipeline-scripts/server_test.sh'
