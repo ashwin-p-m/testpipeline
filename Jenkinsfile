@@ -47,7 +47,7 @@ pipeline {
 
                 script {
 
-                    env.CLIENT_VERSION = sh returnStdout: true, script: 'cd client/sample-app && npm run env | grep npm_package_version | cut --delimiter "=" --fields 2'
+                    env.CLIENT_VERSION = sh returnStdout: true, script: 'cd client/sample-app && npm run env | grep npm_package_version | cut -d "=" -f 2'
                     env.CLIENT_VERSION = sh returnStdout: true, script: 'echo -n $CLIENT_VERSION'
                     env.CLIENT_TAG = "$CLIENT_VERSION-$GIT_HASH"
                     echo "Client Application Test Started..."
