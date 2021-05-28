@@ -34,7 +34,7 @@ pipeline {
         stage('Client Application Test') {
 
             agent {
-                docker { image 'maven:3-openjdk-11-slim' }
+                docker { image 'node:lts-alpine' }
             }
             when {
 
@@ -62,6 +62,9 @@ pipeline {
         }
         stage('Server Application Test') {
             
+            agent {
+                docker { image 'maven:3-openjdk-11-slim' }
+            }
             when {
 
                 anyOf {
@@ -77,6 +80,7 @@ pipeline {
                     env.SERVER_VERSION = sh returnStdout: true, script: 'echo -n $SERVER_VERSION'
                     env.SERVER_TAG = "$SERVER_VERSION-" + currentBuild.number
                     echo "Server Application Test Started..."
+                    sh "chmod +x ./pipeline-scripts/server_test.sh"
                     sh "./pipeline-scripts/server_test.sh"
                     echo "Server Application Test Finished..."
 
