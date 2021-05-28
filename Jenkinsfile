@@ -32,6 +32,9 @@ pipeline {
         }
         stage('Client Application Test') {
 
+            agent {
+                docker { image 'maven:3-openjdk-11-slim' }
+            }
             when {
 
                 anyOf {
