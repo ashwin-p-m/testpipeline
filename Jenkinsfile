@@ -50,6 +50,7 @@ pipeline {
                     env.CLIENT_VERSION = sh returnStdout: true, script: 'echo -n $CLIENT_VERSION'
                     env.CLIENT_TAG = "$CLIENT_VERSION-" + currentBuild.number
                     echo "Client Application Test Started..."
+                    sh "chmod +x ./pipeline-scripts/client_test.sh"
                     sh "./pipeline-scripts/client_test.sh"
                     echo "Client Application Test Finished..."
                 
