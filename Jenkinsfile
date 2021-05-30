@@ -1,5 +1,35 @@
 #!/usr/bin/env groovy
 
+def environmentForBranch(String branch) {
+
+    if (branch == 'main') {
+        return 'prod'
+    }
+    if (branch == 'development') {
+        return 'uat'
+    }
+    if (branch.startsWith('TS-') || branch.startsWith('PR-')) {
+        return 'dev'
+    }
+
+}
+def awsContextForEnvironment(String env) {
+
+    if (env == 'dev' || env == 'uat' ) {
+        return 'nonprod'
+    }
+    if (env == 'perf' || env == 'prod') {
+        return 'prod'
+    }
+
+}
+def awsAccountForContext(String context) {
+
+    if (context == 'nonprod') { return 'nonprodcontext' }
+    if (context == 'prod') { return 'prodcontext' }
+
+}
+
 pipeline {
 
     agent any
@@ -31,6 +61,16 @@ pipeline {
                     env.GIT_HASH = sh returnStdout: true, script: "echo -n $GIT_HASH"
                     env.CLIENT_URL = '192.168.1.5'
                     echo 'Setup Finished...'
+                    echo environmentForBranch('main')
+                    echo environmentForBranch('development')
+                    echo environmentForBranch('TS-12342 efsfs')
+                    echo environmentForBranch('PR-slfhshfsfsod')
+                    echo awsContextForEnvironment('dev')
+                    echo awsContextForEnvironment('uat')
+                    echo awsContextForEnvironment('perf')
+                    echo awsContextForEnvironment('prod')
+                    echo awsAccountForContext('nonprod')
+                    echo awsAccountForContext('prod')
 
                 }
 
