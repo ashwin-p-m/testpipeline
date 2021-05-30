@@ -144,17 +144,17 @@ pipeline {
                 }
 
             }
-            environment {
-                ARTIFACTORY_CRED = credentials("$ARTIFACTORY_CRED_ID")
-            }
+            // environment {
+            //     ARTIFACTORY_CRED = credentials("$ARTIFACTORY_CRED_ID")
+            // }
             steps {
 
                 script {
-
-                    echo 'Docker Client Application Build And Push Started...'
-                    sh './pipeline-scripts/client_docker_build_push.sh'
-                    echo 'Docker Client Application Build Finished...'
-                    
+                    withCredentials([usernamePassword(credentialsId: "$ARTIFACTORY_CRED_ID", usernameVariable: 'DCKR_USR', passwordVariable: 'DCKR_PSW')]) {
+                        echo 'Docker Client Application Build And Push Started...'
+                        sh './pipeline-scripts/client_docker_build_push.sh'
+                        echo 'Docker Client Application Build Finished...'
+                    }
 
                 }
             }
@@ -175,11 +175,11 @@ pipeline {
             steps {
                 
                 script {
-                    
-                    echo 'Docker Server Application Build And Push Started...'
-                    sh './pipeline-scripts/server_docker_build_push.sh'
-                    echo 'Docker Server Application Build Finished...'
-                    
+                    withCredentials([usernamePassword(credentialsId: "$ARTIFACTORY_CRED_ID", usernameVariable: 'DCKR_USR', passwordVariable: 'DCKR_PSW')]) {
+                        echo 'Docker Server Application Build And Push Started...'
+                        sh './pipeline-scripts/server_docker_build_push.sh'
+                        echo 'Docker Server Application Build Finished...'
+                    }
                 }
 
             }
