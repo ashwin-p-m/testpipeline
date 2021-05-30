@@ -150,7 +150,7 @@ pipeline {
             steps {
 
                 echo 'Deployment Started...'
-                build job: 'Deploy_Application_Pipeline' parameters: [string(name: 'CLIENT_TAG', value: "$CLIENT_TAG"), string(name: 'SERVER_TAG', value: "$SERVER_TAG")], propagate: true, wait: true
+                build job: 'Deploy_Application_Pipeline', parameters: [string(name: 'CLIENT_TAG', value: "$CLIENT_TAG"), string(name: 'SERVER_TAG', value: "$SERVER_TAG")], propagate: true, wait: true
                 echo 'Deployment Finished...'
 
             }
