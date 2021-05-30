@@ -25,8 +25,11 @@ pipeline {
                     env.BRANCH_PATTERN = 'main|develop|test-dev|^TS-.*|PR-\\d+'
                     env.REGEXP = 'REGEXP'
                     env.DOCKER_ACCOUNT_NAME = 'ashwinprakash99'
+                    env.GIT_COMMIT = sh returnStdout: true, script: 'git rev-parse HEAD'
+                    env.GIT_COMMIT = sh returnStdout: true, script: "echo -n $GIT_COMMIT"
                     env.GIT_HASH = sh returnStdout: true, script: 'git rev-parse --short HEAD'
                     env.GIT_HASH = sh returnStdout: true, script: "echo -n $GIT_HASH"
+                    env.CLIENT_URL = '192.168.1.5'
                     echo 'Setup Finished...'
 
                 }
@@ -145,19 +148,37 @@ pipeline {
         stage('Deploy') {
 
             steps {
+
                 echo 'Deployment Started...'
                 build job: 'Deploy_Application_Pipeline' parameters: [string(name: 'CLIENT_TAG', value: "$CLIENT_TAG"), string(name: 'SERVER_TAG', value: "$SERVER_TAG")], propagate: true, wait: true
                 echo 'Deployment Finished...'
+
             }
 
         }
-        // stage('Verify') {
+        stage('Verify') {
 
-        //     steps {
-        //         sh "echo 'Verify Stage'"
-        //     }
+            steps {
+                echo 'Verification Started...'
+                sh 'sleep 10'
+                sh "curl '$CLIENT_URL'"
+                echo 'Verification Finished...'
+            }
 
-        // }
+        }
+
+    }
+    post {
+
+        always {
+            echo 'Pipeline Execution Complete...'
+        }
+        failure {
+            echo "Git Changes With Commit - $GIT_COMMIT Failed..."
+        }
+        success {
+            echo "Git Changes With Commit - $GIT_COMMIT Succeeded..."
+        }
 
     }
 
